@@ -1,3 +1,3 @@
-console.log('sjdnsd');
-console.log('asdasd');
-console.log('afsdnfsd');
+export * from './core'
+export * from './domain'
+//export * from './infra'

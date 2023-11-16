@@ -18,7 +18,7 @@ export class Server {
     connectDatabase()
       .then(() => {
         this.app.listen(port, () => {
-          console.log(`listening on port http://localhost:${port}`);
+          console.log(`listening on port: http://localhost:${port}`);
         });
       })
       .catch((error: string) => {
@@ -26,4 +26,3 @@ export class Server {
       });
   }
 }
-console.log('dfsdgmsbjd');
