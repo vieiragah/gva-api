@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { hash } from 'bcryptjs';
 import { PrismaClient } from '@prisma/client';
-import { DatabaseInstance } from '../../../infra';
+import { DatabaseInstance } from '../../infra';
 
 export class User {
   protected readonly database: PrismaClient;
