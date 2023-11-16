@@ -1,13 +1,16 @@
-import { Model, Schema, model } from "mongoose";
-import { User as IUser } from "../../../domain";
+import { Model, Schema, model } from 'mongoose';
+import { User as IUser } from '../../../domain';
 
-const UserSchema = new Schema<Pick<IUser, 'name' | 'email' | 'password'>>({
+const UserSchema = new Schema<Pick<IUser, 'name' | 'email' | 'password'>>(
+  {
     name: String,
     email: {
-        type: String,
-        unique: true
+      type: String,
+      unique: true,
     },
-    password: String
-}, {timestamps: true})
+    password: String,
+  },
+  { timestamps: true },
+);
 
-export const User: Model<IUser> = model<IUser>('user', UserSchema)
+export const User: Model<IUser> = model<IUser>('user', UserSchema);

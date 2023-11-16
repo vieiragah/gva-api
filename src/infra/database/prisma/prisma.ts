@@ -1,11 +1,11 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 
 export class DatabaseInstance {
   public prisma: PrismaClient;
   private static instance: DatabaseInstance;
   private constructor() {
     this.prisma = new PrismaClient({
-      errorFormat: "pretty",
+      errorFormat: 'pretty',
     });
   }
 

@@ -1,3 +1,3 @@
-export * from './core'
-export * from './domain'
+export * from './core';
+export * from './domain';
 //export * from './infra'

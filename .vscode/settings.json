@@ -1,9 +1,17 @@
 {
-   "code-runner.executorMap": {
-     "typescript": "npx ts-node --files --transpile-only",
-   },
-   "editor.codeActionsOnSave": {
-     "source.fixAll.eslint": true,
-     "source.fixAll": true
-   }
- }
+  "code-runner.executorMap": {
+    "typescript": "npx ts-node --files --transpile-only"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll": true
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "editor.formatOnSave": true,
+  "prettier.requireConfig": true
+}

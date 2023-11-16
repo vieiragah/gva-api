@@ -1,5 +1,5 @@
-import { connectDatabase } from "../infra";
-import express, { Express, Router, json } from "express";
+import { connectDatabase } from '../infra';
+import express, { Express, Router, json } from 'express';
 
 export class Server {
   private readonly app: Express;
@@ -10,8 +10,8 @@ export class Server {
     this.app.use(json());
   }
   private setupRoutes(routes: Router) {
-    this.app.use("/", routes);
-  }  
+    this.app.use('/', routes);
+  }
   public start(port: number, routes: Router) {
     this.setMiddlewares();
     this.setupRoutes(routes);
