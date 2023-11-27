@@ -1,18 +1,12 @@
 import { Request, Response } from 'express';
 import { hash } from 'bcryptjs';
-import { PrismaClient } from '@prisma/client';
-import { DatabaseInstance } from '../../infra';
+import { Prisma } from '../../infra';
 
 export class User {
-  protected readonly database: PrismaClient;
-  constructor() {
-    this.database = DatabaseInstance.getInstance().prisma;
-  }
-
   async create(req: Request, res: Response): Promise<Response> {
-    const { name, email, password } = req.body;
+    const { name, email, password, nurse, supervisor, technician } = req.body;
 
-    const existingEmail = await this.database.users.findFirst({
+    const existingEmail = await Prisma.users.findFirst({
       where: {
         email,
       },
@@ -21,18 +15,21 @@ export class User {
       return res.status(400).json('E-mail já cadastrado.');
     }
     const hashPassword = await hash(password, 10);
-    const createUser = await this.database.users.create({
+    const createUser = await Prisma.users.create({
       data: {
         email,
         name,
         password: hashPassword,
+        nurse,
+        supervisor,
+        technician,
       },
     });
     return res.status(200).json(createUser);
   }
   async readAll(_req: Request, res: Response) {
     try {
-      const users = await this.database.users.findMany();
+      const users = await Prisma.users.findMany();
       res.status(200).json(users);
     } catch (error) {
       console.log(error);
@@ -40,7 +37,7 @@ export class User {
   }
   async read(req: Request, res: Response) {
     const { id } = req.query as { id: string };
-    const findUser = await this.database.users.findFirst({
+    const findUser = await Prisma.users.findFirst({
       where: {
         id,
       },
@@ -48,6 +45,7 @@ export class User {
     if (!findUser) {
       return res.status(404).json('Usuário não encontrado');
     }
+    res.status(200).json(findUser);
   }
   async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.query as { id: string };
@@ -56,7 +54,7 @@ export class User {
       password: string;
       email: string;
     };
-    const findUser = await this.database.users.findFirst({
+    const findUser = await Prisma.users.findFirst({
       where: {
         id,
       },
@@ -64,7 +62,7 @@ export class User {
     if (!findUser) {
       return res.status(400).json('Usuário não encontrado.');
     }
-    const updateUser = await this.database.users.update({
+    const updateUser = await Prisma.users.update({
       where: {
         id: findUser.id,
       },
@@ -76,5 +74,18 @@ export class User {
     });
     return res.status(200).json(updateUser);
   }
-  async delete() {}
+  async delete(req: Request, res: Response): Promise<Response> {
+    const { id } = req.query as { id: string };
+    try {
+      const deleteUser = await Prisma.users.delete({
+        where: {
+          id,
+        },
+      });
+      return res.status(200).json(deleteUser);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json('Erro ao excluir usuário');
+    }
+  }
 }
