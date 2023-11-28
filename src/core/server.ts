@@ -1,6 +1,6 @@
 import { connectDatabase } from '../infra';
 import express, { Express, Router, json } from 'express';
-
+import cors from 'cors';
 export class Server {
   private readonly app: Express;
   constructor() {
@@ -12,7 +12,11 @@ export class Server {
   private setupRoutes(routes: Router) {
     this.app.use('/', routes);
   }
+  private setCors() {
+    this.app.use(cors());
+  }
   public start(port: number, routes: Router) {
+    this.setCors();
     this.setMiddlewares();
     this.setupRoutes(routes);
     connectDatabase()
