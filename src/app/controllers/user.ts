@@ -4,8 +4,11 @@ import { Prisma } from '../../infra';
 
 export class User {
   async create(req: Request, res: Response): Promise<Response> {
-    const { name, email, password, nurse, supervisor, technician } = req.body;
+    const { name, email, password, office } = req.body;
 
+    if (password.lenght < 6) {
+      return res.status(400).json('Senha deve conter no mínimo 6 caracteres.');
+    }
     const existingEmail = await Prisma.users.findFirst({
       where: {
         email,
@@ -20,9 +23,7 @@ export class User {
         email,
         name,
         password: hashPassword,
-        nurse,
-        supervisor,
-        technician,
+        office,
       },
     });
     return res.status(200).json(createUser);
