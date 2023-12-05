@@ -11,4 +11,7 @@ router
   .put(controller.update)
   .delete(controller.delete);
 
+router.route('/login').post(controller.login);
+router.route('/auth?').post(controller.checkToken).get(controller.checkToken);
+
 export default router;
