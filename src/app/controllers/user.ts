@@ -33,7 +33,7 @@ export class User {
       const users = await Prisma.users.findMany();
       res.status(200).json(users);
     } catch (error) {
-      console.log(error);
+      return res.status(404).json('Não foi possível encontrar o usuário.');
     }
   }
   async read(req: Request, res: Response) {
