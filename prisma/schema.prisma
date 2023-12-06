@@ -15,4 +15,16 @@ model Users {
   office    String
   createdAt DateTime @default(now()) @db.Date
   updatedAt DateTime @default(now()) @db.Date
+  Sectors   Sectors? @relation(fields: [sectorsId], references: [id])
+  sectorsId String?  @db.ObjectId
 }
+
+model Sectors {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String   @unique
+  quantity  Int
+  users     Users[]
+  createdAt DateTime @default(now()) @db.Date
+  updatedAt DateTime @default(now()) @db.Date
+}
+
