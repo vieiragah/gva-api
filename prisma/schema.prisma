@@ -23,8 +23,7 @@ model Sectors {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String   @unique
   quantity  Int
-  users     Users[]
+  members   Users[]
   createdAt DateTime @default(now()) @db.Date
   updatedAt DateTime @default(now()) @db.Date
 }
-

@@ -9,11 +9,15 @@ export class Sector {
         data: {
           name,
           quantity,
-          users: Array.isArray(users)
+          members: Array.isArray(users)
             ? { connect: users.map((userId: string) => ({ id: userId })) }
             : undefined,
         },
+        // include: {
+        //   members: true,
+        // },
       });
+      console.log(createSector);
       return res.status(200).json(createSector);
     } catch (error) {
       console.log(error);
@@ -28,7 +32,7 @@ export class Sector {
     try {
       const sector = await Prisma.sectors.findMany({
         include: {
-          users: true,
+          members: true,
         },
       });
       res.status(200).json(sector);
